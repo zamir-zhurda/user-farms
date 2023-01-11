@@ -22,7 +22,7 @@ Application runs on [localhost:3000](http://localhost:3000) by default.
 Migration scripts:
 
 - `npm run migration:generate --path=moduleName --name=InitialMigration` - automatically generates migration files with
-  schema changes made
+  schema changes made 
 - `npm run migration:create --path=moduleName --name=CreateTableUsers` - creates new empty migration file
 - `npm run migration:run` - runs migration
 - `npm run migration:revert` - reverts changes
