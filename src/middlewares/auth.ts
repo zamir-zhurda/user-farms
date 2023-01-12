@@ -11,9 +11,10 @@ export function verifyToken ( req: Request, res: Response, next: NextFunction): 
         const decoded = verify(token, config.JWT_SECRET);     
         console.log("decoded: ",decoded)  
         // req.user = decoded;
+        return next();
       } catch (err) {
-         //console.log("[verifyToken] error ",err)
+        //  console.log("[verifyToken] error ",err)
          res.status(401).send("Invalid Token");
       }
-      return next();
+
 }

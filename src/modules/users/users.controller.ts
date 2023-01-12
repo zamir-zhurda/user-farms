@@ -79,8 +79,12 @@ export class UsersController {
             
             const updatedUserResult = await this.usersService.updateUser(fetchedUser);
             if(updatedUserResult.affected)
-            res.status(200).send(updatedUserResult);
-            return;
+            {
+              res.status(200).send(updatedUserResult);
+
+              return;
+            }
+          
           }     
                     
         }
