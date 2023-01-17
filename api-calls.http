@@ -36,7 +36,7 @@ Content-Type: application/json
 x-access-token: {{token}}
 
 {
-    "email":"test2@email.com",
+    "email":"test1@email.com",
     "password":"1234"
 }
 
@@ -53,7 +53,7 @@ Content-Type: application/json
 x-access-token: {{token}}
 
 {
-    "name" :"b",
+    "name" :"c",
     "address": "via Delle scuole,10, 38068,Rovereto,Italy",
     "size":2,
     "yield":1.2
@@ -70,13 +70,38 @@ Content-Type: application/json
 x-access-token: {{token}}
 
  {
-       "id": {{farmId}},
-        "address": "via Balista,15, 38068,Rovereto,Italy",
-        "name": "first farm-user test2@email.com",
-        "owner": "test2@email.com",
+       "id": "{{farmId}}",
+        "address": "via Balista, 15, 38068, Rovereto, Italy",
+        "name": "first farm-user test1@email.com",
+        "owner": "test1@email.com",
         "size": "2",
         "yield": "1.1"
  }
+
+###
+
+###
+#Updating farm by userId
+# @name updatingFarmByUserEmail
+patch http://localhost:3000/api/v1/users/{{email}}/update/farms
+Content-Type: application/json
+x-access-token: {{token}}
+
+ {
+       "id": "{{farmId}}",
+        "address": "via Balista, 15, 38068, Rovereto, Italy",
+        "name": "first farm-user test1@email.com",
+        "owner": "test1@email.com",
+        "size": "2",
+        "yield": "1.1"
+ }
+
+###
+#Deleteing a farm
+# @name deletingFarm
+delete http://localhost:3000/api/v1/users/{{email}}/delete/farms/{{farmId}}
+Content-Type: application/json
+x-access-token: {{token}}
 
 ###
 #Fetch all farms
@@ -87,7 +112,7 @@ x-access-token: {{token}}
 
 
 ###
-#Deleting all users (and their correspective farms)
+#Deleting all users (and their corresponding farms)
 
 delete http://localhost:3000/api/v1/users/delete
 x-access-token: {{token}}

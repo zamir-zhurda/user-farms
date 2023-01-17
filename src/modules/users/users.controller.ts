@@ -1,7 +1,6 @@
-// import { isNumber } from "class-validator";
-// import { PrismaClient} from "@prisma/client";
+
+import { isEmail } from "class-validator";
 import { Decimal } from "@prisma/client/runtime";
-import { IsEmail } from "class-validator";
 import { NextFunction, Request, Response } from "express";
 import { convertAddressToCoordinates } from "helpers/utils";
 import { CreateFarmDto } from "modules/farms/dto/create-farm.dto";
@@ -9,7 +8,6 @@ import { UpdateFarmDto } from "modules/farms/dto/update-farm.dto";
 import { FarmsService } from "modules/farms/farms.service";
 import { DeleteResult, UpdateResult } from "typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
-// import { UpdateUserDto } from "./dto/update-user.dto";
 import { UsersService } from "./users.service";
 
 export class UsersController {
@@ -27,7 +25,7 @@ export class UsersController {
       const user = await this.usersService.createUser(req.body as CreateUserDto);
       res.status(201).send(user);
     } catch (error) {
-      console.log("[Users.controller][create] error: ",error);
+      //console.log("[Users.controller][create] error: ",error);
       next(error);
     }
   }
@@ -118,18 +116,16 @@ export class UsersController {
 
   public async updateFarm(req: Request, res: Response, next: NextFunction) {
     try {
-      const { userId } = req.params;
-      // const { email } = req.params;
-      const updateFarmDto: UpdateFarmDto = req.body;
-      console.log("userId: ",userId)
-      // console.log("email: ",email)
+      const { userId } = req.params;    
+      const updateFarmDto: UpdateFarmDto = req.body;      
+      
       if(updateFarmDto) {
         let updatedFarmResult:UpdateResult;
-        if(!IsEmail(userId)){
+        if(!isEmail(userId)) {          
            updatedFarmResult = await this.farmsService.updateFarm(updateFarmDto, userId.toString(),undefined);
            if(updatedFarmResult.affected)
            res.status(200).send(updatedFarmResult);
-        } else if (IsEmail(userId)){
+        } else if (isEmail(userId)) {          
           const email = userId;
           updatedFarmResult = await this.farmsService.updateFarm(updateFarmDto, undefined,email.toString());
           if(updatedFarmResult.affected)
@@ -140,7 +136,7 @@ export class UsersController {
       }
       res.status(404).send("Missing farmId or data of the farm");
     }catch (error) {
-      // console.log("[Users.controller][updateFarm] error: ",error);
+     //console.log("[Users.controller][updateFarm] error: ",error);
       next(error);
     }
   }
@@ -150,18 +146,16 @@ export class UsersController {
       const { userId } = req.params;
       const { farmId } = req.params;
 
-      const email = IsEmail(userId) ? userId : undefined;
+      const email = isEmail(userId) ? userId : undefined;
      
-      let deletedFarmResult:DeleteResult;
-      // console.log("params userId: ",userId)
-      // console.log("params farmId: ",farmId)
+      let deletedFarmResult:DeleteResult;     
      if(email && farmId){
         deletedFarmResult = await this.farmsService.deleteFarm(undefined, email.toString(), farmId);
         if(deletedFarmResult.affected){
           res.status(204).send(deletedFarmResult);
           return;
         }
-      } else if(userId && !IsEmail(userId) && farmId) {
+      } else if(userId && !isEmail(userId) && farmId) {
         deletedFarmResult =  await this.farmsService.deleteFarm(userId,undefined,farmId);
         if(deletedFarmResult.affected){
           res.status(204).send(deletedFarmResult);
@@ -178,8 +172,7 @@ export class UsersController {
   public async fetchAllFarms(req: Request, res: Response, next: NextFunction) {
     try {
       const {} = req.params;
-      const allFarms = await this.farmsService.listAllFarms();
-      // console.log("[Users.controller][deleteFarm] fetchAllFarms: ",allFarms);
+      const allFarms = await this.farmsService.listAllFarms();      
       res.status(200).send(allFarms);
     }catch (error) {
       // console.log("[Users.controller][listAllFarms] error: ",error);
@@ -190,11 +183,10 @@ export class UsersController {
   public async deleteAllUsers(_: Request, res: Response, next: NextFunction){
     try {
      
-      const deleteResult = await this.usersService.deleteAllUsers();
-      // console.log("[Users.controller][deleteFarm] fetchAllFarms: ",allFarms);
+      const deleteResult = await this.usersService.deleteAllUsers();      
       res.status(200).send(deleteResult);
     }catch (error) {
-      console.log("[Users.controller][deleteAllUsers] error: ",error);
+      //console.log("[Users.controller][deleteAllUsers] error: ",error);
       next(error);
     }
   }

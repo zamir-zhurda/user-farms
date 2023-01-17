@@ -3,13 +3,7 @@ import { verify } from "jsonwebtoken";
 import config from "config/config";
 
 export function verifyToken ( req: Request, res: Response, next: NextFunction): void {
-    const token = req.body?.token || req.query?.token || req.headers["x-access-token"];
-    console.log("=================================================")
-    console.log("token: ",token)  
-    console.log("req.body?.token: ",req.body?.token)  
-    console.log("req.query?.token: ",req.query?.token)  
-    console.log('req.headers["x-access-token"]: ',req.headers["x-access-token"])      
-    console.log("================================================")
+    const token = req.body?.token || req.query?.token || req.headers["x-access-token"];   
     if (!token) {
         res.status(403).send("A token is required for authentication");
     }

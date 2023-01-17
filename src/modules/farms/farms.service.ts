@@ -49,7 +49,7 @@ export class FarmsService {
     let existingFarm : Farm | null  = new Farm();
 
     if(userId) {
-        existingUser = await this.usersRepository.findOne({ where: {id: id},relations: ['farms'] });
+        existingUser = await this.usersRepository.findOne({ where: {id: userId},relations: ['farms'] });
     } else if(email) {
         existingUser = await this.usersRepository.findOne({ where: { email: email },relations: ['farms'] });
     } else {
@@ -102,7 +102,7 @@ export class FarmsService {
         const updatedFarmPromise = this.farmsRepository.update(existingFarm.id, existingFarm);
         return updatedFarmPromise;
 
-    }else{
+    } else {
         throw new UnprocessableEntityError("this user is not the owner of the farm!");
     }
 
