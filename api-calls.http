@@ -1,0 +1,93 @@
+#GET ROOT API
+get http://localhost:3000
+
+####
+
+# @name Login
+post  http://localhost:3000/api/auth/login 
+Content-Type: application/json
+
+{
+    "email":"1@email.com",
+    "password":"1234"
+}
+
+#### Variable response
+@token = {{Login.response.body.$.token}}
+
+####
+#Update user
+patch http://localhost:3000/api/v1/users/update
+Content-Type: application/json
+x-access-token: {{token}}
+# Authorization: token
+
+{
+    "email" :"1@email.com",
+    "address":"rruga Njazi Meka, 4, 1012, Tirana, Albania"
+}
+
+###
+#Create new user
+# @name creatingNewUser
+
+post  http://localhost:3000/api/v1/users/
+Content-Type: application/json
+x-access-token: {{token}}
+
+{
+    "email":"test2@email.com",
+    "password":"1234"
+}
+
+#### Variable response
+@userId = {{creatingNewUser.response.body.$.id}}
+@email = {{creatingNewUser.response.body.$.email}}
+
+###
+#Add Farm to user by userId
+# @name addingFarmToUser
+
+post http://localhost:3000/api/v1/users/{{userId}}/farms/create
+Content-Type: application/json
+x-access-token: {{token}}
+
+{
+    "name" :"b",
+    "address": "via Delle scuole,10, 38068,Rovereto,Italy",
+    "size":2,
+    "yield":1.2
+}
+
+#### Variable response
+@farmId = {{addingFarmToUser.response.body.$.id}}
+
+###
+#Updating farm by userId
+# @name updatingFarm
+patch http://localhost:3000/api/v1/users/{{userId}}/update/farms
+Content-Type: application/json
+x-access-token: {{token}}
+
+ {
+       "id": {{farmId}},
+        "address": "via Balista,15, 38068,Rovereto,Italy",
+        "name": "first farm-user test2@email.com",
+        "owner": "test2@email.com",
+        "size": "2",
+        "yield": "1.1"
+ }
+
+###
+#Fetch all farms
+
+get http://localhost:3000/api/v1/users/fetch/farms
+Content-Type: application/json
+x-access-token: {{token}}
+
+
+###
+#Deleting all users (and their correspective farms)
+
+delete http://localhost:3000/api/v1/users/delete
+x-access-token: {{token}}

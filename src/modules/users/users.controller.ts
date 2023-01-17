@@ -22,12 +22,12 @@ export class UsersController {
   }
 
   public async create(req: Request, res: Response, next: NextFunction) {
-    // console.log("[Users.controller][create] req.body: ",req.body);
+     console.log("[Users.controller][create] req.body: ",req.body);
     try {
       const user = await this.usersService.createUser(req.body as CreateUserDto);
       res.status(201).send(user);
     } catch (error) {
-      // console.log("[Users.controller][create] error: ",error);
+      console.log("[Users.controller][create] error: ",error);
       next(error);
     }
   }
@@ -78,6 +78,7 @@ export class UsersController {
             //fetchedUser.coordinates = {fetchedUser.latitude,fetchedUser.longitude};
             
             const updatedUserResult = await this.usersService.updateUser(fetchedUser);
+            console.log("\n updatedUserResult: ",updatedUserResult)
             if(updatedUserResult.affected)
             {
               res.status(200).send(updatedUserResult);
