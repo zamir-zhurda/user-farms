@@ -7,6 +7,8 @@ import ds from "orm/orm.config";
 import supertest, { SuperAgentTest } from "supertest";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UsersService } from "../users.service";
+import { User } from "../entities/user.entity";
+import { LoginUserDto } from "modules/auth/dto/login-user.dto";
 
 describe("UsersController", () => {
   let app: Express;
@@ -37,10 +39,10 @@ describe("UsersController", () => {
 
   describe("POST /users", () => {
     const createUserDto: CreateUserDto = { email: "user@test.com", password: "password" };
-
+    let createdUser:User;
     it("should create new user", async () => {
       const res = await agent.post("/api/v1/users").send(createUserDto);
-
+      createdUser = res.body;
       expect(res.statusCode).toBe(201);
       expect(res.body).toMatchObject({
         id: expect.any(String),
@@ -61,5 +63,24 @@ describe("UsersController", () => {
         message: "A user for the email already exists",
       });
     });
+
+    it("should update user already created", async () => {
+      await usersService.createUser(createUserDto);
+      const loginDto: LoginUserDto = { email: "user@test.com", password: "password" };
+      const loginResponse = await agent.post("/api/auth/login").send(loginDto);     
+      const { token } = loginResponse.body;
+      agent.set('x-access-token',token)
+
+      const updateResponse = await agent.patch("/api/v1/users/update").send({email:createdUser.email, address: "rruga Njazi Meka, 64, 1012, Tirana, Albania"});
+
+      expect(updateResponse.statusCode).toBe(200);
+      expect(updateResponse.body).toMatchObject({
+        "generatedMaps": [],
+        "raw": [],
+        "affected": 1
+      });
+    });
+
+
   });
 });
