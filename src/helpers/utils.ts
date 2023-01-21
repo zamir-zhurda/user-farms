@@ -84,8 +84,8 @@ export const containsDigit = (inputText : string) : Boolean => {
 export const convertAddressToCoordinates = async (address : string) :Promise<NodeGeocoder.Entry[]> => {
   const res = await geocoder.geocode(address);
 
-  console.log("address:",address);
-  console.log("response geocoder: ",res);
+  // console.log("address:",address);
+  // console.log("response geocoder: ",res);
   // const {latitude:number, longitude:number} = res;
   
   return res;

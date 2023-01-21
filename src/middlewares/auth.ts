@@ -8,8 +8,9 @@ export function verifyToken ( req: Request, res: Response, next: NextFunction): 
         res.status(403).send("A token is required for authentication");
     }
     try {
-        const decoded = verify(token, config.JWT_SECRET);     
-        console.log("decoded: ",decoded)  
+         verify(token, config.JWT_SECRET);
+        // const decoded = verify(token, config.JWT_SECRET);     
+        // console.log("decoded: ",decoded);  
         // req.user = decoded;
         return next();
       } catch (err) {

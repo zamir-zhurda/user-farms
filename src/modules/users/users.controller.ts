@@ -20,7 +20,7 @@ export class UsersController {
   }
 
   public async create(req: Request, res: Response, next: NextFunction) {
-     console.log("[Users.controller][create] req.body: ",req.body);
+    //  console.log("[Users.controller][create] req.body: ",req.body);
     try {
       const user = await this.usersService.createUser(req.body as CreateUserDto);
       res.status(201).send(user);
@@ -61,7 +61,7 @@ export class UsersController {
         fetchedUser =  await this.usersService.findOneBy({ email: email.toString() });
         //need to convert the address to coordinates (latitude and longitude)
         const coordinates = await convertAddressToCoordinates(address)
-        console.log("[users.controller][update] coordinates: ",coordinates)
+        // console.log("[users.controller][update] coordinates: ",coordinates)
         if(Array.isArray(coordinates) && coordinates.length > 0)
         {
           const {latitude,longitude} = coordinates[0]; //I may have more objects but I'm picking the first one!
@@ -76,7 +76,7 @@ export class UsersController {
             //fetchedUser.coordinates = {fetchedUser.latitude,fetchedUser.longitude};
             
             const updatedUserResult = await this.usersService.updateUser(fetchedUser);
-            console.log("\n updatedUserResult: ",updatedUserResult)
+            // console.log("\n updatedUserResult: ",updatedUserResult)
             if(updatedUserResult.affected)
             {
               res.status(200).send(updatedUserResult);
@@ -91,7 +91,7 @@ export class UsersController {
         res.status(404).send("Address not found!");
       }
     } catch (error) {
-      console.log("[Users.controller][update] error: ",error);
+      // console.log("[Users.controller][update] error: ",error);
       next(error);
     }
   }

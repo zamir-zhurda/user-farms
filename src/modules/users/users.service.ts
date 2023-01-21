@@ -28,7 +28,7 @@ export class UsersService {
     const hashedPassword = await this.hashPassword(password);    
     const userData: DeepPartial<User> = { email, hashedPassword };    
     const newUser = this.usersRepository.create(userData);
-     console.log(`[Users.service][createUser] newUser: `,newUser);
+    //  console.log(`[Users.service][createUser] newUser: `,newUser);
     return this.usersRepository.save(newUser);
   }
 

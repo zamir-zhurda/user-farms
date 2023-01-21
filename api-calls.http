@@ -23,8 +23,8 @@ x-access-token: {{token}}
 # Authorization: token
 
 {
-    "email" :"1@email.com",
-    "address":"rruga Njazi Meka, 4, 1012, Tirana, Albania"
+    "email" :"test1@email.com",
+    "address":"rruga Qemal Stafa,10, 1005, Tirana, Albania"
 }
 
 ###
@@ -53,8 +53,8 @@ Content-Type: application/json
 x-access-token: {{token}}
 
 {
-    "name" :"c",
-    "address": "via Delle scuole,10, 38068,Rovereto,Italy",
+    "name" :"test farm -lui",
+    "address": "36 harmon street,07035,Lincoln Park,New Jersey",
     "size":2,
     "yield":1.2
 }
@@ -71,9 +71,9 @@ x-access-token: {{token}}
 
  {
        "id": "{{farmId}}",
-        "address": "via Balista, 15, 38068, Rovereto, Italy",
-        "name": "first farm-user test1@email.com",
-        "owner": "test1@email.com",
+        "address": "rruga Qemal Stafa,10,1001,Tirana,Albania",
+        "name": "first farm-user test-lui@email.com",
+        "owner": "test-lui@email.com",
         "size": "2",
         "yield": "1.1"
  }
